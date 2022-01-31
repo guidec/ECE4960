@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Lab 1</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body style="background-color:lightgrey;text-align: center;" >
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading" style="color: blue;">ECE 4960 - Guillaume de Cannart</div>
+      <div class="list-group list-group-flush">
+        <a href="../index.html" class="list-group-item list-group-item-action bg-light">Home</a>
+        <a href="../lab1/index.html" class="list-group-item list-group-item-action bg-light">Lab 1</a>
+        <!-- <a href="../lab2/index.html" class="list-group-item list-group-item-action bg-light">Lab 2</a>
+        <a href="../lab3/index.html" class="list-group-item list-group-item-action bg-light">Lab 3</a>
+        <a href="../lab4/index.html" class="list-group-item list-group-item-action bg-light">Lab 4</a> -->
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://cei-lab.github.io/ECE4960-2022/">Cornell ECE4960 Website</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid" id="margins">
+        <h1 class="mt-4">ECE 4960: LAB 1</h1>
+        <h3>Description</h3>
+        <p>The purpose of lab 1 was to setup the Artemis Nano board with the Arduino IDE, and ensure all proper functioning of functions.</p>
+
+        <p>The following board functionalities were checked during this lab:</p>
+        <p>1. LED Blink</p>
+        <p>2. Serial Communication</p>
+        <p>3. ADC Anaolog Read (Temperature)</p>
+        <p>4. Sound/Decibel Microphone Output</p>
+        <hr>
+        <p><h4>1. LED Blink</h4></p>
+        <p>For this step of the lab, the ARDUINO IDE was configured to function with the Artemis Nano Board. After importing all required packages, the LED and flash functionality was tested with the Blink example script.
+        <p>This resulted in the following ouput</p>
+
+        <p><i>Artemis Nano Blink:</i></p>
+        <video width="400" height="480" controls>
+          <source src="../images/artemis-led.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        </video>  
+        <br>
+
+       <p><h4>2. Serial Communication</h4></p>
+        <p>Part 2 of the lab consisted in ensuring that serial communication on the board works. This was done by sending messages over serial, and having the Artemis Nano Echo them back.  
+          <p>This resulted in the following ouput</p>
+
+
+        <p><i>Artemis Nano Serial:</i></p>
+        <video width="400" height="480" controls>
+          <source src="../images/artemis-serial.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        </video>  
+        <br>
+
+        <p><h4>3. ADC Anaolog Read (Temperature)</h4></p>
+        <p>Part 3 of the lab tests ADC functionality of the board by detecting temparature changes read via the ADC. Results were confirmed by printing out the ADC values over the Serial Monitor (as per the example script).
+          <p>This resulted in the following ouput</p>
+
+
+        <p><i>Artemis Nano ADC:</i></p>
+        <video width="400" height="480" controls>
+          <source src="../images/artemis-adc.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        </video>  
+        <br>
+
+        <p><h4>4. Sound/Decibel Microphone Output</h4></p>
+        <p>Part 4 of the lab tests microphone output functionality, and its ability to detect DB noise changes. Likewise, results were confirmed by printing loudness values in the Serial Monitor.
+          <p>This resulted in the following ouput</p>
+
+
+        <p><i>Artemis Nano Decibels:</i></p>
+        <video width="400" height="480" controls>
+          <source src="../images/artemis-db.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        </video>  
+        <br>
+
+
+        
+      <hr>
+      <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><i>- - - - - This concludes Lab 1 - - - - -</i></p>
+          </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>
