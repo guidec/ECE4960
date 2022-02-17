@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Lab 2</title>
+  <title>Lab 3</title>
 
   <!-- Bootstrap core CSS -->
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -69,28 +69,27 @@
       </nav>
 
       <div class="container-fluid" id="margins">
-        <h1 class="mt-4">ECE 4960: LAB 2 - Bluetooth</h1>
+        <h1 class="mt-4">ECE 4960: LAB 3 - Sensors</h1>
         <h3>Description</h3>
-        <p>The purpose of lab 2 was to setup Bluetooth the Artemis Nano board with the Arduino IDE and python commands, and ensure all proper functioning of functions. This includes sending and reading over Bluetooth</p>
+        <p>The purpose of lab 3 was to setup the IMU and TOF sensors on the Artemis Nano board. This involved two parts, both the wiring and soldering, and the code development two ensure proper functioning of both sensors. Since two TOF sensors were used, the address of one of the two sensors also had to be changed.</p>
 
         <p>The following functionalities were tested during this lab:</p>
-        <p>1. ECHO command</p>
-        <p>2. SEND_THREE_FLOATS command</p>
-        <p>3. Notification Handler</p>
+        <p>1. TOF Sensor</p>
+        <p>2. IMU output</p>
+        <p>3. Converting blabla</p>
   
         <hr>
-        <p><h4>1. ECHO command</h4></p>
-        <p>For this step of the lab, an ECHO command was sent from the computer to the Artemis board over the established connection (see lab handout)</p>
-        <p>The ECHO receiving code was written in Arduino to extract the character array received from the computer, and then convert this string into a string to be sent with the addition of '"Robot says -> " + char_arr + " :)"'</p>
+        <p><h4>1. TOF Sensor</h4></p>
+        <p>The TOF sensor</p>
         <p>This resulted in the following succesful output on the Arduino Serial Monitor:</p>
 
 
         <p><i>Artemis Nano Bluetooth ECHO:</i></p>
-        <img src="../images/LAB2_part1.JPG"  alt="Part 1: high pass" width="50%">
+        <img src="../images/"  alt="Part 1: high pass" width="50%">
         <br>
 
         <p><i>Artemis Nano Bluetooth code:</i></p>
-        <img src="../images/lab2_part1_code.JPG"  alt="Part 1: high pass" width="50%">
+        <img src="../images/"  alt="Part 1: high pass" width="50%">
         <br>
 
        <p><h4>2. SEND_THREE_FLOATS command</h4></p>
@@ -100,27 +99,27 @@
 
 
         <p><i>Artemis Nano Bluetooth SEND_THREE_FLOAT</i></p>
-        <img src="../images/lab2_part2_outputJPG.JPG"  alt="Part 1: high pass" width="50%">
+        <img src="../images/"  alt="Part 1: high pass" width="50%">
         <br>
 
         <p><i>Artemis Nano Bluetooth SEND_THREE_FLOAT code</i></p>
-        <img src="../images/lab2_part2_code.JPG"  alt="Part 1: high pass" width="50%">
+        <img src="../images/"  alt="Part 1: high pass" width="50%">
         <br>
 
         <p><h4>3. Artemis Nano Notification Handler</h4></p>
-        <p>The third part of the lab consisted of writing a notification handler to handle continuous reading of changing float values originating from the Artemis nano. The notification handler itself is called by start_notify, a function part of the BLE class supplied by the lab manual and zip file. </p>   
+        <p>TPlaceholder </p>   
         <p>The notification handler was defined as follows: </p> 
 
 
         <p><i>Python Notification Handler code:</i></p>
-        <img src="../images/LAB2_part3_code.JPG"  alt="Part 1: high pass" width="50%">
+        <img src="../images/"  alt="Part 1: high pass" width="50%">
         <br>
 
         <p>This resulted in the following ouput (on the computer):</p>
 
 
         <p><i>Jupyter Notebook continuous float read output:</i></p>
-        <img src="../images/LAB2_part3.JPG"  alt="Part 1: high pass" width="50%">
+        <img src="../images/"  alt="Part 1: high pass" width="50%">
         <br>
 
 
