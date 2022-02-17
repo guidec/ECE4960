@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Lab 1</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body style="background-color:lightgrey;text-align: center;" >
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading" style="color: blue;">ECE 4960 - Guillaume de Cannart</div>
+      <div class="list-group list-group-flush">
+        <a href="../index.html" class="list-group-item list-group-item-action bg-light">Home</a>
+        <a href="../lab1/index.html" class="list-group-item list-group-item-action bg-light">Lab 1</a>
+         <a href="../lab2/index.html" class="list-group-item list-group-item-action bg-light">Lab 2</a>
+        <!--<a href="../lab3/index.html" class="list-group-item list-group-item-action bg-light">Lab 3</a>
+        <a href="../lab4/index.html" class="list-group-item list-group-item-action bg-light">Lab 4</a> -->
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://cei-lab.github.io/ECE4960-2022/">Cornell ECE4960 Website</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid" id="margins">
+        <h1 class="mt-4">ECE 4960: LAB 2 - Bluetooth</h1>
+        <h3>Description</h3>
+        <p>The purpose of lab 2 was to setup Bluetooth the Artemis Nano board with the Arduino IDE and python commands, and ensure all proper functioning of functions. This includes sending and reading over Bluetooth</p>
+
+        <p>The following functionalities were tested during this lab:</p>
+        <p>1. ECHO command</p>
+        <p>2. SEND_THREE_FLOATS command</p>
+        <p>3. Notification Handler</p>
+  
+        <hr>
+        <p><h4>1. ECHO command</h4></p>
+        <p>For this step of the lab, an ECHO command was sent from the computer to the Artemis board over the established connection (see lab handout)</p>
+        <p>The ECHO receiving code was written in Arduino to extract the character array received from the computer, and then convert this string into a string to be sent with the addition of '"Robot says -> " + char_arr + " :)"'</p>
+        <p>This resulted in the following succesful output on the Arduino Serial Monitor:</p>
+
+
+        <p><i>Artemis Nano Bluetooth ECHO:</i></p>
+        <video width="400" height="480" controls>
+          <source src="../images/artemis-led.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        </video>  
+        <br>
+
+       <p><h4>2. SEND_THREE_FLOATS command</h4></p>
+        <p>This step of the lab consisted of reading three floats being sent from the computer to the Artemis nano. On the Artemis nano end, the three values needed to be read and stored in seperate values. This was done to then print out the received values on the serial Monitor of the Arduino IDE.</p>  
+        <p>On the sending side of things, a the send_command method was called to send the three bytes to the bluetooth receiver's address. </p>
+        <p>This resulted in the following ouput on the Arduino IDE Serial Monitor:</p>
+
+
+        <p><i>Artemis Nano Bluetooth SEND_THREE_FLOAT</i></p>
+        <video width="400" height="480" controls>
+          <source src="../images/artemis-serial.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        </video>  
+        <br>
+
+        <p><h4>3. Artemis Nano Notification Handler</h4></p>
+        <p>The third part of the lab consisted of writing a notification handler to handle continuous reading of changing float values originating from the Artemis nano. The notification handler itself is called by start_notify, a function part of the BLE class supplied by the lab manual and zip file. </p>   
+        <p>The notification handler was defined as follows: </p> 
+
+
+        <p><i>Python Notification Handler:</i></p>
+        <img src="../images/500hz_spectrum_decannartGuillaume.jpg"  alt="Part 1: high pass" width="50%">
+        <br>
+
+        <p>This resulted in the following ouput (on the computer):</p>
+
+
+        <p><i>Jupyter Notebook continuous float read output:</i></p>
+        <img src="../images/500hz_spectrum_decannartGuillaume.jpg"  alt="Part 1: high pass" width="50%">
+        <br>
+
+
+        
+      <hr>
+      <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><i>- - - - - This concludes Lab 1 - - - - -</i></p>
+          </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>
