@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Lab 3</title>
+  <link rel="shortcut icon" href="images/icons8-internet-explorer-50.png"
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body style="background-color:lightgrey;text-align: center;" >
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading" style="color: blue;">ECE 4960 - Guillaume de Cannart</div>
+      <div class="list-group list-group-flush">
+        <a href="../index.html" class="list-group-item list-group-item-action bg-light">Home</a>
+        <a href="../lab1/index.html" class="list-group-item list-group-item-action bg-light">Lab 1</a>
+         <a href="../lab2/index.html" class="list-group-item list-group-item-action bg-light">Lab 2</a>
+        <a href="../lab3/index.html" class="list-group-item list-group-item-action bg-light">Lab 3</a>
+        <a href="../lab4/index.html" class="list-group-item list-group-item-action bg-light">Lab 4</a> 
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://cei-lab.github.io/ECE4960-2022/">Cornell ECE4960 Website</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid" id="margins">
+        <h1 class="mt-4">ECE 4960: LAB 4 - Car Characterization</h1>
+        <h3>Description</h3>
+        <p>The purpose of Lab 4 is to get a sense of the robot that we will be utilizing for the rest of the lab. This includes things such as braking, dynamic stunt chracteristics, length/width. </p>
+
+        
+        <p>1. Car Characteristics</p>
+        <p>2. Car Dynamics - Stunts</p>
+        
+        <img src="../images/car.jpg"  alt="Part 1: high pass" width="50%">
+        <br>
+
+  
+        <hr>
+        <p><h4>1. Car Characteristics</h4></p>
+        <p>The car was measured, in case this information might be required for future calculations involving robot size.</p>
+        <img src="../images/length-car.jpg"  alt="Part 1: high pass" width="50%">
+        <br>
+
+        <br>
+        <p>LENGTH: ~8 Inches</p>
+        <p>WIDTH: ~6 Inches</p>
+
+        <h4>2. Car Dynamics</h4>
+<br><br><br><br>
+        <h6>1. Flipping Behaviors</h6>
+        <p>The first test executed was to see how the car execute flips, and how reliably it does so. The primary observation here was that the flipping behavior heavily depends on the battery charge - a newly charged battery sees no issues in executing flips as the motors have enough velocity and torque, but when using an older battery the car is no longer able to flip and instead only drives front and back.</p>
+
+<br><br>
+<p><i>Fast Robot Flip</i></p>
+        <video width="400" height="480" controls>
+          <source src="../images/do-a-flip.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        </video>  
+        <br>
+        <br><br><br>
+        <h6>2. Stunts - Jump </h6>
+
+        <p>The next behavior tested was how reliably it can jump off of surfaces. This test was preformed several times, and the major obervation was that upon landing, the car does not follow its original path and instead upon stabliizing takes a whole new direction. This may be important to know for future parts - we might want to keep the robot on a flat surface at all times</p>
+        <br><br>
+        <p><i>Fast Robot Jump</i></p>
+                <video width="400" height="480" controls>
+                  <source src="../images/flip.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video>  
+                <br>
+
+                <br><br><br>
+
+
+        <h6>3. Spinning Drift</h6>
+
+        <br>
+        <p>Next, the drift while the vehicle spins on it's axis was determined. To do so, the vehicle was spun on its axis from a chosen location during 10s, and the drift distance was measured.</p>
+
+        <br>
+        <br><br>
+        <p><i>Fast Robot Spin</i></p>
+                <video width="400" height="480" controls>
+                  <source src="../images/spinny.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video>  
+                <br>
+<br><br>
+        <p>Upon observing the drift distance, it was concluded that over the course of 10s of spinning on a low-friction surface (in this case the lab space), the robot drifts apprximately 8 inches. </p>
+<br><br>
+        <img src="../images/displacement.jpg"  alt="Part 1: high pass" width="50%">
+        <br>
+
+
+        <br><br>
+<br>
+        <h6>4. Fast Robot Wall Flip</h6>
+        <br>
+        <p>Next, the ability to flip against a wall was tested for reliability. In this case, the robot preformed very well - when flipping against a wall, it maintained a perfect perpendicular angle to the wall and was able to drive away perpendicularly. This could come to use if the robot requires to readjust it's orientation to perform certain behaviors, as it essentially aligns the robot to a specific global orientation in the room.</p>
+        
+        <p><i>Fast Robot Wall Flip</i></p>
+        <video width="400" height="480" controls>
+          <source src="../images/wall-flip.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        </video>  
+        <br>
+
+
+      <hr>
+      <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><i>- - - - - This concludes Lab 4- - - - -</i></p>
+          </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>
