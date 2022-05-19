@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Lab 10</title>
+  <link rel="shortcut icon" href="images/icons8-internet-explorer-50.png"
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body style="background-color:lightgrey;text-align: center;" >
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading" style="color: blue;">ECE 4960 - Guillaume de Cannart</div>
+      <div class="list-group list-group-flush">
+        <a href="../index.html" class="list-group-item list-group-item-action bg-light">Home</a>
+        <a href="../lab1/index.html" class="list-group-item list-group-item-action bg-light">Lab 1</a>
+         <a href="../lab2/index.html" class="list-group-item list-group-item-action bg-light">Lab 2</a>
+        <a href="../lab3/index.html" class="list-group-item list-group-item-action bg-light">Lab 3</a>
+        <a href="../lab4/index.html" class="list-group-item list-group-item-action bg-light">Lab 4</a> 
+        <a href="../lab10/index.html" class="list-group-item list-group-item-action bg-light">Lab 10</a> 
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://cei-lab.github.io/ECE4960-2022/">Cornell ECE4960 Website</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid" id="margins">
+        <h1 class="mt-4">ECE 4960: LAB 10 - Simulator</h1>
+        <h3>Description</h3>
+        <p>The simulator tool for this course reconstructs the robot environment virtually with a virtual robot, virtual sensors, and virtual environment and plotting tool.</p>
+        <p>This allows us to simulate PID, localization, and a variety of other algorithms virtually, avoiding hardware bugs and environment noise before moving these algorithms over to the real world. </p>
+        <p>In this lab, we used the simulator environment to perform simple open-loop and closed-loop control based on TOF sensor information. Finally, plots were generated and saved to analyze the results of this simulation.</p>
+        
+        <img src="../images/lab10-1.JPG"  alt="Part 1: Simulator Setup" width="50%">
+        <p><em>Figure 1: Lab 4960 Simulator Initialization (Provided)</em></p>
+        <br>
+
+  
+        <hr>
+        <p><h4>1. Simulator Setup</h4></p>
+        <p>This part involved setting up the simulator, and installing all relevant python packages for the simulator to run. This included packages such as box2d via a .wheel file, and all relevant dependencies such as  numpy pygame pyqt5 pyqtgraph pyyaml ipywidgets and colorama.</p>
+        <p>Along with this package installation process, python was upgraded to ensure that it is at the correct version to run the simulator and its relevant dependencies. </p>
+        <br>
+        <br>
+        <hr>
+        <h4>2. Simulator Functionalities</h4>
+        <br>
+        <p>First, the simulator jupyter notebook was downloaded and extracted in the project folder. In addition, the virtual environment was setup with the following command:</p>
+        <br>
+        <p><code>virtualenv ece4960-venv</code></p>
+        <p>This allowed all installed packages to stay local to the project being worked on, instead of afffecting all python projects on the computer.</p>
+
+        <h6>Start/Stop Functionality</h6>
+        <p>The first relevant functionality in the simulator is the Start/Stop functionality. This straightforward functionality simply starts up the simulator, as illustrated below: </p>
+        <br>
+        <img src="../images/lab10-2.JPG"  alt="Simulator Functionality: Start/Stop" width="50%">
+        <br>
+<br>
+        <h6>Commander Class</h6>
+        <p>
+        The second relevant functionality is the commander class, which allows for plotting, retrieveing sensor data, resetting the simulator, and driving the robot in the simulator. These functionalities are illustrated below: 
+        </p>
+        <br>
+        <img src="../images/lab10-3.JPG"  alt="Simulator Functionality: Commander Class (source: ECE 4960 lab-10 jupyter notbook)" width="20%">
+        <br>
+<br><br><br>
+<hr>
+        <h4>3. Lab Tasks </h4>
+        <h6>1. Open Loop Control</h6>
+        <p>The first task for this simulator lab was performing opern loop control with the simulator robot. </p>
+        <p>The objective with this task was to have the robot execute a square path in the map.</p>
+        <br>
+        <p>The resulting plots of both the odometry and the ground truth data were plotted with the simulator functions on the map, resulting in the following plots: </p>
+
+        <br>
+        <br>
+        <img src="../images/lab10-4.JPG"  alt="Task 1: Open Loop Control" width="50%">
+        <br>
+        <p>As seen above, firstly the odometry data (shown in red) is completely off, and does not nearly follow the robot trajectory. However, we do see that the open loop control does execute squares. </p>
+        <p>This being said however, the ground truth data is not quite precise. If we zoom in closer on the executed square, we can see that the robot path gradually drifts over time:</p>
+        <br>
+        <br>
+        <img src="../images/lab10-5.JPG"  alt="Task 1: Open Loop Control (Drifting path)" width="50%">
+        <br>
+        <p>Above, we can see more clearly that the square gradually rotates. This is mostly due to the robot's inability to execute perfect 90 degree turns.</p>
+        <p>Here, the duration of the velocity command is 1.5 seconds going in a straight line, and 1.535 seconds rotating with the following commands: </p>
+        <br>
+        <p><code> cmdr.set_vel(0.3, 0)</code></p>
+        <p><code>await asyncio.sleep(1.5)</code></p>
+        <p><code>cmdr.set_vel(0, 1)</code></p>
+        <p><code>await asyncio.sleep(1.535)</code></p>
+        
+        <br>
+        <p>As mentioned above, the robot does not always execute the same path, but gradually drifts off path.</p>
+<br><br><br>
+<hr>
+        <h6>2. Closed Loop Control</h6>
+        <p>This part of the lab involved designing a simple closed loop controller in Jupyter notebook to avoid obstacles. This was done with the following commands:</p>
+        <br><br>
+        <br>
+        <img src="../images/lab10-6.JPG"  alt="Task 2: Closed Loop Control" width="50%">
+        <br>
+        <p>As seen in the above image, the robot velocity is set to lin_speed (in this case 1.0), and it retrieves the sensor information after executing this velocity command. </p>
+        <p>If the robot detects that the sensor information retrieved is below the threshold (in this case set to a distance of 0.3m, then the robot rotates<b> 90 degrees in place </b> and continues to drive forward at the same previous speed.</p>
+        <p>This behavior is demonstrated in the image below: </p>
+        <br><br>
+        <br>
+        <img src="../images/lab10-7.JPG"  alt="Task 2: Open Loop Control" width="50%">
+        <br>
+        <p>Here, the robot speed is set to a <b>max linear speed of 1.1</b>. This was determined to be the maximum achievable speed without having the robot bump into walls due to its inability to read sensor information and stop on time. </p>
+        <p>To further prevent collisions, the robot speed could be set slower. In the below case, the linear speed is set to 0.7. This improves the angle of rotation (as seen above, there is significant angular drift with high linear speed). This is shown below: </p>
+        <br><br>
+        <br>
+        <img src="../images/lab10-8.JPG"  alt="Task 2: Closed Loop Control " width="50%">
+        <br>
+        <p>Seen above, the robot executes better angular rotations at slower linear speeds, and then gets stuck in a rectangular pattern avoiding walls.</p>
+        
+        <p><i>How close can the virtual robot get to an obstacle without colliding?</i></p>
+        <p>To determine the closest distances, the control loop was ran over the course of several minutes while printing out sensor values at which the robot effecutates a rotation. A snippet of them are shown below: </p>
+        <br><br>
+        <br>
+        <img src="../images/lab10-9.JPG"  alt="Task 2: Closed Loop Control " width="50%">
+        <br>
+        <p>Here, the minimum value found was <b>~0.12004m</b> at a linear speed of 1.1. </p> 
+      
+        <p>Over the course of 10+ trial runs, the obstacle avoidance code did not fail, as demonstrated by the above true pose plots showing that the robot always stops and rotates before hitting a wall.</p>
+      
+        <hr>
+      <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><i>- - - - - This concludes Lab 10- - - - -</i></p>
+          </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>
