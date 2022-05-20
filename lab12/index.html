@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Lab 11</title>
+  <link rel="shortcut icon" href="images/icons8-internet-explorer-50.png"
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body style="background-color:lightgrey;text-align: center;" >
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading" style="color: blue;">ECE 4960 - Guillaume de Cannart</div>
+      <div class="list-group list-group-flush">
+        <a href="../index.html" class="list-group-item list-group-item-action bg-light">Home</a>
+        <a href="../lab1/index.html" class="list-group-item list-group-item-action bg-light">Lab 1</a>
+         <a href="../lab2/index.html" class="list-group-item list-group-item-action bg-light">Lab 2</a>
+        <a href="../lab3/index.html" class="list-group-item list-group-item-action bg-light">Lab 3</a>
+        <a href="../lab4/index.html" class="list-group-item list-group-item-action bg-light">Lab 4</a> 
+        <a href="../lab10/index.html" class="list-group-item list-group-item-action bg-light">Lab 10</a> 
+        <a href="../lab11/index.html" class="list-group-item list-group-item-action bg-light">Lab 11</a>
+        <a href="../lab12/index.html" class="list-group-item list-group-item-action bg-light">Lab 12</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://cei-lab.github.io/ECE4960-2022/">Cornell ECE4960 Website</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid" id="margins">
+        <h1 class="mt-4">ECE 4960: LAB 12 - Grid Localization (Real)</h1>
+        <h3>Description</h3>
+        <p>This lab consisted of completing grid localization as done in the simulator (see <a href="../lab11/index.html">lab 11</a>), but in a real environment. The same algorithms as described in <a href="../lab11/index.html">lab 11</a> were used, 
+        but the sensor information passed to the algorithm to compute the pose was a set of 18 sensor measurements as measured by the robot in the lab.</p>
+        <br>
+        <h4>Update Step</h4>
+        <p>Considering how there is no robot motion involved in this lab, the prediction step of the Bayes Filter is not necessary for localization due to the lack of odometry information or pose change. It therefore
+            only relies on the update step of the bayes filter, which takes sensor measurements as an input to compute the pose belief of the robot. 
+        </p>
+        <br>
+
+
+        <h4>Robot Sensor Data</h4>
+        <p>Since the sensor model of the Bayes Filter accepts an array of 18 real sensor measurements as an input, the step of retrieving this data and passing it to the jupyter notebook to compute the pose had to be completed. 
+            Considering how 18 sensor measurements were required, each measurement is spaced out equally by 20 degrees. The final output sent by the robot over bluetooth to the python host laptop are two sets of values: one set containing the angles, and the other containing the 
+            range measurements at that given angle. The environment in which the robot retrieves these measurements is pictured below: 
+        </p>
+        
+<br>
+
+        <img src="../images/lab9-1.JPG"  alt="Part 1: Simulator Setup" width="70%">
+        <p><em>Figure 1: Localization Map Environment </em></p>
+        <br>
+
+        <h5>Artemis Range Measurement & Bluetooth Transmission</h5>
+        <p>Considering how the first step of getting the localization update step to work was inputting good range information, the first step was to 
+            tune the Artemis code to collect readings every 20 degrees. This was done by conducting a while loop while checking for the change in angle, until it reaches 20 degrees.
+            When the robot reaches a turn angle of 20 degrees, it breaks out of the while loop and adds the data to an array. This is repeated 18 times within a for loop.
+        This is shown in the below code snippet: 
+        
+        </p>
+        <br>
+        <img src="../images/lab12-1.JPG"  alt="Part 2: Nope Setup" width="50%">
+        <p><em>Figure 1: Collecting angle data from the Artemis board</em></p>
+        <br>
+        <p>Once completed, the data needed to be sent over bluetooth to the server laptop. 
+            This was done by using the boilerplate provided Bluetooth class, to which new functions were added to send an array of values. In particular, 18 distance measurements were sent over bluetooth to the computer after each localization rotation. 
+        On the jupyter notebook side of things, sending data was implemented via a callback function, shown below:
+        </p>
+
+        <br>
+        <img src="../images/lab12-2.JPG"  alt="Part 3: Nope Setup" width="50%">
+        <p><em>Figure 2: Receiving data from the Artemis on the Laptop</em></p>
+        <br>
+        <p>On the Artemis side of things, a function was built off of previous float transmitting bluetooth functions to loop over an entire array and send values. This happens as soon as the car executes the full rotation.</p>
+        <p>Lastly, <code>perform_observation_loop</code> was updated to send the bluetooth command, wait for the robot to execute the rotation, and </p>
+        <br>
+        <img src="../images/lab12-3.JPG"  alt="Part 3: Nope Setup" width="50%">
+        <p><em>Figure 3: Waiting for observation Loop Data</em></p>
+        <br>
+
+        <hr>
+        
+
+        <h3>Results</h3>
+        <h5>Rotations</h5>
+        <p>Below is a video of the robot executing the 360 degree rotation, and collecting measurements at 20 degree intervals. This same step was repeated over all five waypoints, 
+            but for brevity only one run example is shown: 
+        </p>
+
+        <p><i>Data collection rotation</i></p>
+                <video width="580" height="480" controls>
+                  <source src="../images/lab12-1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video>  
+        <br>
+        <br>
+
+        <hr>
+        <h4>Waypoints</h4>
+        <p>We needed to localize at a series of waypoints in order to complete this lab. Those waypoints were: </p>
+        <p><code>-3, -2, 0deg</code></p>
+        <p><code>0, 3, 0deg</code></p>
+        <p><code>5, -3, 0deg</code></p>
+        <p><code>5, 3, 0deg</code></p>
+        <br><hr><br>
+        <h5>Waypoint 1: <code>-3, -2, 0deg</code></h5>
+        <p>The first localization waypoint was -3, -2 as shown with the robot position below:</p>
+        <br>
+        <img src="../images/lab12-4.JPG"  alt="Part 3: Nope Setup" width="50%">
+        <p><em>Figure 4: Localization at -3, -2</em></p>
+        <br>
+        <p>Upon completing a full rotation, the position of the robot was estimated to be at -0.914m, -0.305m, i.e. -3ft,m -1ft. This means that the x-position localization was spot on, but 
+            the y-position localization somehow undershot by one foot. The reason for this is rather unknown, but it could be due to measurement noise or due to the partial wall that it sees in the positive y direction. This is shown on both images below:
+        </p>
+        <br>
+        <img src="../images/lab12-5.JPG"  alt="Part 3: Nope Setup" width="50%">
+        <p><em>Figure 5: Plotted Localization Result</em></p>
+        <br>
+        <br>
+        <img src="../images/lab12-6.JPG"  alt="Part 3: Nope Setup" width="50%">
+        <p><em>Figure 6: Bayes Filter Localization Belief</em></p>
+        <br>
+        <h5>Waypoint 2: <code>0, 3, 0deg</code></h5>
+        <p>The next localization waypoint was 0, 3. Upon completion of the full localization rotation, the position was estimated to 0m, 1.219m, 
+            i.e. 0ft, 4ft. Similarly to the previous waypoint, the localization algorithm missed the y-localization but got the x-localization spot on. Although previously this was believed it might be preventDefault
+            to a specific location on the map, this might be due to errors or noise in data collection since it seems to be persisting. This is shown below::</p>
+            <br>
+            <img src="../images/lab12-7.JPG"  alt="Part 3: Nope Setup" width="50%">
+            <p><em>Figure 7: Plotted Localization Result for 0, 3</em></p>
+            <br>
+            <br>
+            <img src="../images/lab12-8.jpeg"  alt="Part 3: Nope Setup" width="50%">
+            <p><em>Figure 8: Bayes Filter Localization Belief for 0, 3</em></p>
+            <br>
+        <br>
+        <h5>Waypoint 3: <code>5, -3, 0deg</code></h5>
+        <p>The third waypoint for localization was at 5ft, -3ft. After completing the localization loop, the Bayes Filter returned 1.524m, -0.914m. This is equivalent to imperial measurements of 5ft, -3ft, meaning
+            that the localization algorithm was able to locate the robot precisely.</p>
+
+            <br>
+            <img src="../images/lab12-10.JPG"  alt="Part 3: Nope Setup" width="50%">
+            <p><em>Figure 9: Plotted Localization Result for 5, -3</em></p>
+            <br>
+            <br>
+            <img src="../images/lab12-9.jpg"  alt="Part 3: Nope Setup" width="50%">
+            <p><em>Figure 10: Bayes Filter Localization Belief for 5, -3</em></p>
+            <br>
+        <h5>Waypoint 4: <code>5, 3, 0deg</code></h5>
+        <p>The last waypoint was 5ft, 3ft. Here, I unfortunately forgot to save the output of the bayes filter, so I relied on the saved mapping output to estimate the belief. 
+            From the plot seen below, the estimated belief is 0m, 1.6m, which is equal to imperial measurements of 0ft, 5.2ft. This is very far off
+        from the true position of 5ft, 3ft.  </p>
+        <br>
+            <img src="../images/lab12-12.jpg"  alt="Part 3: Nope Setup" width="50%">
+            <p><em>Figure 11: Bayes Filter Localization Belief for 5, 3</em></p>
+            <br>
+
+
+        
+        <br>
+        <hr>
+      <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><i>- - - - - This concludes Lab 12 - - - - -</i></p>
+          </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>

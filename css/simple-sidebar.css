@@ -35,6 +35,11 @@
 
 }
 
+#margins2{
+  width: 70%;
+
+}
+
 #wrapper.toggled #sidebar-wrapper {
   margin-left: 0;
 }
