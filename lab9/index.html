@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Lab 9</title>
+  <link rel="shortcut icon" href="images/icons8-internet-explorer-50.png"
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body style="background-color:lightgrey;text-align: center;" >
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading" style="color: blue;">ECE 4960 - Guillaume de Cannart</div>
+      <div class="list-group list-group-flush">
+        <a href="../index.html" class="list-group-item list-group-item-action bg-light">Home</a>
+        <a href="../lab1/index.html" class="list-group-item list-group-item-action bg-light">Lab 1</a>
+         <a href="../lab2/index.html" class="list-group-item list-group-item-action bg-light">Lab 2</a>
+        <a href="../lab3/index.html" class="list-group-item list-group-item-action bg-light">Lab 3</a>
+        <a href="../lab4/index.html" class="list-group-item list-group-item-action bg-light">Lab 4</a> 
+        <a href="../lab10/index.html" class="list-group-item list-group-item-action bg-light">Lab 9</a> 
+        <a href="../lab10/index.html" class="list-group-item list-group-item-action bg-light">Lab 10</a> 
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://cei-lab.github.io/ECE4960-2022/">Cornell ECE4960 Website</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid" id="margins">
+        <h1 class="mt-4">ECE 4960: LAB 9 - Mapping</h1>
+        <h3>Description</h3>
+        <p>In order to prepare for labs 10-13, a map of the robot area needed to be constructed for future localization and navigation. The lab area had a series of points marked on which the mapping algorithm needed to be ran.</p>
+        <p>To complete this lab, data was collected at the following waypoints:</p>
+        <p><code>[-3, -2]</code></p>
+        <p><code>[-5, -3]</code></p>
+        <p><code>[0, 0]</code></p>
+        <p><code>[0, 3]</code></p>
+        <p><code>[5, 3]</code></p>
+
+        <p>The above waypoints can be seen on the image below, which represents the area that the robot is attempting to map:</p>
+        <br><br>
+        <img src="../images/lab9-1.JPG"  alt="Part 1: Simulator Setup" width="50%">
+        <p><em>Figure 1: Lab Map Layout</em></p>
+        <br>
+
+        <hr>
+        <br>
+        <h4>Rotational Control & Data Collection</h4>
+        <p>Out of both available options to complete data collection for this lab, I chose the first option with the robot collecting data while rotating continuously. Instead of limiting data collection to 14 points per location, I gathered more datapoints as to improve the accuracy of the resulting map.</p>
+
+        <p>To collect angular and distance data, the robot was rotated while measuring angular rotation. This was done by using the gyroscope Z-axis yaw, in combination with the time delta. </p>
+        <p><code>yaw = (myICM.gyrZ() + myICM.gyrZ()*dt*.001)*(.3) + prev_yaw*.7</code></p>
+        <p>Where here, dt is the time delta between the current and previous time.</p>
+        <p>In combination with the rotational data, the distance measurements were also saved:</p>
+        <p><code>dist = frontSensor.getDistance();</code></p>
+
+
+
+        <p>This resulted into 5 arrays of values with angles, and distance measurements. Below is an example dataset of values collected from the robot: </p> 
+        <br>
+        <img src="../images/lab9-extra.JPG"  alt="Part 1: Simulator Setup" width="15%">
+        <p><em>Figure 2: Example dataset collected from rotation</em></p>
+        <br>
+        <br>
+
+
+        <p></p>In order to convert these measurements into actual map locations, the following computations needed to be performed: </p>
+        <p>1. Convert angle measurements into radians</p>
+        <p>2. Per location, convert radians + distance measurements into respective X-Y map coordinates</p>
+        <p>3. Plot points and determine where map lines are found.</p>
+        
+        <br><br>
+
+        <h5>Measurement Example: Map Location 1: [5, -3]</h5>
+        <p>This process was first computed for map location 5, -3. </p>
+        <p>First, the angles were converted to radian measurements:</p>
+        <br>
+        <p><code>angle/180.9*np.pi</code></p>
+        <br>
+        <p>Next, the x and y location was determine for each reading in the arrays:</p>
+        <p><code>x = mapdist[i]*np.cos(map_ang[i]) + 304.5*(5)</code></p>
+        <p><code>y = mapdist[i]*np.sin(map_ang[i]) - 304.5*(3)</code></p>
+        <br><br>
+        <p>As seen above, the x and y points are shifted +5 and -3 respectively to account for the position at which the measurments were takne. Plotting this resulted in the following set of initial map coordinates:</p>
+        <br><br>
+        <img src="../images/lab9-2.JPG"  alt="Map coordinates 1" width="50%">
+        <p><em>Figure 3: Initial mapping measurements at coordinate 5, -3</em></p>
+        <br>
+        <br>
+        <h5>Measurements at all 5 locations</h5>
+        <p>The above process was repeated for all 5 map locations, and combined into a single plot. This resulted in the following scatterplot map.</p>
+        <br><br>
+        <img src="../images/lab9-3.JPG"  alt="Map coordinates 1" width="50%">
+        <p><em>Figure 4: Full mapping measurements at all 5 locations</em></p>
+        <br>
+        <br>
+        <hr>
+        <h4>Constructing the Map</h4>
+        <p>The next part of this lab was to approximate the location of supposed walls in the area, and save them to a list for use in the simulator with lab 10. </p>
+        <p>According to the plotted configuration of measurements, the following walls were approximated:</p>
+        <br>
+        <p><code>walls_x = [1900, 1900, -700, -700, -1550, -1550,-1550, -150, -150, 250, 250, 1900]
+            </code></p>
+            <p><code>walls_y = [-1250, 1300, 1300, 50, 50, -1250, -1250, -1250, -900, -900, -1250, -1250]
+                </code></p>
+        <p><code>square_x = [1400, 750, 750, 750, 1400, 1400]</code></p>
+        <p><code>square_y = [500, 500, -100, -100, -100, 500]</code></p>
+                <br>
+        <p>This resulted in the following wall map:</p>
+        <br><br>
+        <img src="../images/lab9-4.JPG"  alt="Map coordinates 1" width="50%">
+        <p><em>Figure 5: Mapping measurements with approximate wall locations</em></p>
+        <br>
+        
+        <h4>Removing measurement errors</h4>
+        <p>As a last optional step (moreso for cleanliness/visuals of the map rather than utility), distance measurements representing clear error in comparison with other datapoints were removed from the map.</p>
+        <p>This was done by clearing and removing any datapoints that were not located on or near one of the drawn walls with the following code: </p>
+
+        <br><br>
+        <img src="../images/lab9-5.JPG"  alt="Map coordinates 1" width="50%">
+        <p><em>Figure 6: Removing datapoints not located on or near maps</em></p>
+        <br>    
+                <br>
+        <p>Altogether, this resulted in the following final mapping plot: </p>
+        <br><br>
+        <img src="../images/lab9-6.JPG"  alt="Map coordinates 1" width="50%">
+        <p><em>Figure 7: Final plot, Mapping Lab 9</em></p>
+        <br> 
+
+
+
+                <br><br><br><br><br><br>
+        <p><i>- - - - - This concludes Lab 9- - - - -</i></p>
+          </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>
