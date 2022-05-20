@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Lab 11</title>
+  <link rel="shortcut icon" href="images/icons8-internet-explorer-50.png"
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body style="background-color:lightgrey;text-align: center;" >
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading" style="color: blue;">ECE 4960 - Guillaume de Cannart</div>
+      <div class="list-group list-group-flush">
+        <a href="../index.html" class="list-group-item list-group-item-action bg-light">Home</a>
+        <a href="../lab1/index.html" class="list-group-item list-group-item-action bg-light">Lab 1</a>
+         <a href="../lab2/index.html" class="list-group-item list-group-item-action bg-light">Lab 2</a>
+        <a href="../lab3/index.html" class="list-group-item list-group-item-action bg-light">Lab 3</a>
+        <a href="../lab4/index.html" class="list-group-item list-group-item-action bg-light">Lab 4</a> 
+        <a href="../lab10/index.html" class="list-group-item list-group-item-action bg-light">Lab 10</a> 
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://cei-lab.github.io/ECE4960-2022/">Cornell ECE4960 Website</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid" id="margins">
+        <h1 class="mt-4">ECE 4960: LAB 11 - Grid Localization (Simulator)</h1>
+        <h3>Description</h3>
+        <p>The aim of this lab was to complete grid localization within the box2d simulator environment. In this case, a given trajectory was predefined within the simulator, and the goal was to best represent that ground truth trajectory with Bayes Filter localization. 
+            For this lab, we were given an initial jupyter notebook with classes an helper functions, as outlined below.
+        </p>
+        <br>
+        <h5>Commander Class</h5>
+        <p>The first set of functions within the simulator environment are packaged within the Commander class. This class allows for interaction with the simulator and plotter, and contains
+            functions to control the robot and retrieve sensor data, plotter functions to plot the map, odometry information, ground truth, and belief, as well as simulator status utility functions.
+        </p>
+        <br>
+        <h5>VirtualRobot Class</h5>
+        <p>The second set of functions within the provided simulator environment are the VirtualRobot class methods. This class acts as a wrapper around the commander class, and similarly controls the robots motion and retrieves sensor information.
+        </p>
+        <br>
+        <h5>Mapper Class</h5>
+        <p>The third set of functions are packaged within the Mapper class. This class holds information related to the grid map, along three dimensions.
+            In our case, the grid map is a 3-d numpy grid with sizes 12 by 9 by 8. It has functions to convert grid indices to world coordinates, and vice versa. It also holds true measurements as a robot should
+            see in a particular cell location. Certain global variables are also defined, such as the grid cells in all dimensions, total observations per cell, and a 4D numpy array with precached views measurements.
+        </p>
+        <br>
+        <h5>BaseLocalization Class</h5>
+        <p>The simulator environment also has a BaseLocalization class. This class holds all grid localization helper functions, to which we will be adding in this lab to complete the Bayes Filter required for localization.
+            Most important here are the methods <code>get_observation_data()</code>, and gaussian which both play a fundamental role in estimating localization with Bayes Filter.
+            Getting observation data is required for the sensor model, where in this case we call <code>obs_range_data</code> to retrieve range measurements.
+            The class also holds variables such as the noise parameters for the sensor, and noise parameters for the rotation and translation of odometry data.
+        </p>
+        <br>
+        <h5>Trajectory Class</h5>
+        <p>Lastly, the simulator environment also holds functions within the trajectory class. This class is simply used to execute a trajectory, which the Bayes localization Filter
+            that we are making in this lab is supposed to approximate.
+        </p>
+<br><br><hr>
+        <h4>Tasks</h4>
+        <br>
+        <h5>1. Prediction Step</h5>
+        <p>The first step in creating the Bayes Filter was to develop the algorithm for the prediction step of the Bayes Filter. This 
+            step is shown below, and takes as inputs the current and previous odometry information to use the robot movement information in computing the pose belief.
+            The mathematical description of this step returning bel_bar is shown below:
+        </p>
+        <br>
+        <img src="../images/lab11-1.JPG"  alt="Part 1: Simulator Setup" width="70%">
+        <p><em>Figure 1: Bayes Filter Prediction Step </em></p>
+        <br>
+        <h6>Optimizing Loop Iteration</h6>
+        <p>Considering the large number of operations that need to be performed to update the belief grid, attention was taken to ensure the algorithm would not spend time updating cells which did not affect bel_bar.
+            To do this, while looping over every belief in the 3x3 grid, only cells that had a probability greater than a threshold were updated. This is shown in code below:
+
+        </p>
+
+        <br>
+        <img src="../images/lab11-2.JPG"  alt="Part 1: Simulator Setup" width="70%">
+        <p><em>Figure 2: Optimizing the Bayes Filter Prediction Step</em></p>
+        <br>
+
+        <h6>Motion Model and Bel_bar Calculation</h6>
+        <p>In the case that a cell with non-zero previous belief is found, the algorithm updates that cel with an updated bel_bar. This is done by looping over the 
+            full grid and multiplying the previous belief with the motion model output describing the probability of the robot having moved to that new cell in the given timestep.
+        </p>
+        <p>The motion model was also written for this lab. It takes as input the current and previous pose, and with noise parameters to compute the gaussian probability distribution of the robot's motion. This step is shown below, taking the 
+            current pose, previous pose, and control data as inputs: </p>
+        <br>
+        <img src="../images/lab11-3.JPG"  alt="Part 1: Simulator Setup" width="100%">
+        <p><em>Figure 3:Motion Model</em></p>
+        <br>
+        <br>
+        <h5>2. Update Step</h5>
+        <br>
+        <h6>Sensor Model</h6>
+            <p>The second step of Bayes Filter Localization is the update step. This step passes as input the true observations of the robot in a given pose on the map, and calculates the probability of each sensor measurement in that pose, outputting them for use in the update step. 
+                The outputted probability array consists of a gaussian probability distribution of the true observations along with the expected observations in that position, given by <code>mapper.get_views</code>.
+            The developed algorithm for this step is shown below: 
+            </p>
+            <br>
+        <img src="../images/lab11-4.JPG"  alt="Part 1: Simulator Setup" width="70%">
+        <p><em>Figure 4:Sensor Model</em></p>
+        <br>
+
+        <h5>3. Combining Prediction and Update Step in the Bayes Filter</h5>
+            <p>Finally, the prediction and update steps are combined to perform localization with the Bayes Filter. The update step is shown below, returning the new location belief: </p>
+            <br>
+            <img src="../images/lab11-5.JPG"  alt="Part 1: Simulator Setup" width="70%">
+            <p><em>Figure 5:Update Step</em></p>
+        
+        <br>
+        <hr>
+        <br>
+            <h4>Results</h4>
+        <p>The above algorithm was ran in the simulator, trailing the trajectory defined by the <code>Trajectory</code> class.
+        The pose belief is calculated after every robot motion by rotating 360 degrees around its axis, collecting range information to compute the sensor model. 
+        In the below video, pose belief is represented in blue, ground truth in green, and odometry information in red.
+        From the simulator run, we see that the localization algorithm well approximates the true pose, whereas the odometry data
+        computes the path as being far off what it is expected to be: 
+        </p>
+
+
+        <p><i>Bayes Filter Localization: Simulator</i></p>
+                <video width="780" height="480" controls>
+                  <source src="../images/lab11-1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video>  
+                <br>
+
+                <br>
+
+
+        <p>From multiple run iterations, it appears that the robot struggles in accurately localizing in when it turns to the right and reaches the first box osbstalce. The reason 
+            for this may be that the object is tall and thin, therefore the robot retrieves measurements showing proximity to the obstacle whereas other measurements do not. 
+            The robot seems to most accurately predict pose when objects are relatively far away, such as the upper right area. 
+        </p>
+
+        <br>
+            <img src="../images/lab11-6.JPG"  alt="Part 1: Simulator Setup" width="70%">
+            <p><em>Figure 6: Completed Trajectory - Simulator</em></p>
+        
+        <br>
+        <hr>
+        
+        <hr>
+      <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><i>- - - - - This concludes Lab 11 - - - - -</i></p>
+          </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>
