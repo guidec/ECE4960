@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Lab 6</title>
+  <link rel="shortcut icon" href="images/icons8-internet-explorer-50.png"
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body style="background-color:lightgrey;text-align: center;" >
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading" style="color: blue;">ECE 4960 - Guillaume de Cannart</div>
+      <div class="list-group list-group-flush">
+        <a href="../index.html" class="list-group-item list-group-item-action bg-light">Home</a>
+        <a href="../lab1/index.html" class="list-group-item list-group-item-action bg-light">Lab 1</a>
+         <a href="../lab2/index.html" class="list-group-item list-group-item-action bg-light">Lab 2</a>
+        <a href="../lab3/index.html" class="list-group-item list-group-item-action bg-light">Lab 3</a>
+        <a href="../lab4/index.html" class="list-group-item list-group-item-action bg-light">Lab 4</a> 
+        <a href="../lab5/index.html" class="list-group-item list-group-item-action bg-light">Lab 5</a>
+        <a href="../lab6/index.html" class="list-group-item list-group-item-action bg-light">Lab 6</a>
+        <a href="../lab10/index.html" class="list-group-item list-group-item-action bg-light">Lab 10</a> 
+        <a href="../lab11/index.html" class="list-group-item list-group-item-action bg-light">Lab 11</a>
+        <a href="../lab12/index.html" class="list-group-item list-group-item-action bg-light">Lab 12</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://cei-lab.github.io/ECE4960-2022/">Cornell ECE4960 Website</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid" id="margins">
+        <h1 class="mt-4">ECE 4960: LAB 6 - Closed-loop Control (PID)</h1>
+        <hr>
+        <h3>Description</h3>
+        <p>
+            With the robot now being able to be controlled via PWM commands, this lab extends the motor and driving functions of the robot
+            by adding closed-loop PID control. This PID control uses depth information from the TOF sensor to bring more accuracy in the robot's motion.
+             
+
+
+        </p>
+        <br>
+        <br>
+        <hr>
+        <h4>1. Choosing a Task</h4>
+        <p>
+          The first step in this lab was choosing a task to be performed with PID control, as based on this task different code had to be 
+          written. For each of these tasks, we needed to ensure to log data to be able to plot and review the robot's behaviors, and also prepare for future labs
+          where data export will also be required. I ended up choosing <b>Task A: Don't Hit the Wall!</b> which had as goal to stop the robot when it's 300mm
+          away from the wall.  
+        </p>
+
+
+        <br>
+        <img src="../images/lab6-1.JPG"  alt="Part 1: Simulator Setup" width="70%">
+        <p><em>Figure 1: Task A: 300mm Stop in front of Wall </em></p>
+        <br>
+        <br>
+        <hr>
+
+        <h4>2. Designing the PID Controller</h4>
+        <p>
+            Given time contraints, i chose to focus on getting the P(ID) portion of the PID controller to work well. I had also heard from other people in the lab
+            and from TA's that the robot performed well under just the P term of the PID controller, so decided to move forward with this.  
+
+        </p>
+
+        <p>
+            For the P term of the PID controller, I calculated the difference between the distance from the goal and the desired distance (in this case 300mm),
+            and once a value returned I multiplied the value by a gain value Kp. This essentially translated the distance different with gain multiplication into a 
+            control value for the robot - which is strongly dependent on the gain. This code is shown below: 
+        </p>
+
+
+        <br>
+        <img src="../images/lab6-2.JPG"  alt="Part 1: Simulator Setup" width="70%">
+        <p><em>Figure 2: P(id) control code </em></p>
+        <br>
+
+        <p>
+            In order to give the robot a range in which it was deemed reasonable to have reached its endgoal, the speeds at which the robot goes
+            striaght or backwards were set between a range of -2 and 2, essentially allowing for it to stop moving if it's within a small margin of error.
+        </p>
+        
+        <br>
+        <hr>
+        <h4>3. Tuning the Motor Driver Functions for PID</h4>
+        <p>
+            Considering how the PID controller outputs positive and negative values, I had to go back and adjust my motor control code
+            to deal with negative as well as positive inputs. I did this by simply converting any negative passed inputs to positive values (to the backwards function),
+            assuming that a negative value passed to the backwards function simply is the output of a PID calculation. Additionally, I realized that the PID controller
+            tended to output value above or below the maximum control values accepted by the robot (25 and 255). I therefore added code
+            to convert any values above or below these to their respective maxima and minima. This is shown below:
+        </p>
+        <br>
+        <img src="../images/lab6-3.JPG"  alt="Part 2: Nope Setup" width="50%">
+        <p><em>Figure 3: Motor Control Code</em></p>
+        <br>
+
+        <br>
+        <hr>
+
+        <h4>4. PID Experiments</h4>
+        <p>
+          This code was tested in the lab environment, and was found to repeatably result in accurate PID motion for the robot. The values used for Kp
+          ranged from <code>0.03</code> to <code>0.07</code>, with <code>0.05</code> deemed to be the value delivering the best results. A further discussion below will compare plots
+          of each Kp value to determine any meaningful differences. Below, a PID run is demonstrated at a Kp value of 0.07, which is slightly too high resulting in a light tap of the wall.
+          The videos of the run at 0.03 and 0.05 unfortunately seemed to have been corrupted as I could not find them on my phone.
+
+        </p>
+
+        <br>
+        <p><i>P(ID) Control with Kp 0.07</i></p>
+          <video width="580" height="480" controls>
+            <source src="../images/lab6-1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+          </video>  
+        <br>
+
+        <br>
+        <hr>
+        <h4>5. Discussion</h4>
+        <h5>Time vs. Distance</h5>
+        <p>
+          Data was collected over the runs at a gain value of 0.03, 0.04, and 0.07. Below are plots demonstrating the time vs. distance values for different Kp gain factors.
+        </p>
+
+        <br>
+        <img src="../images/lab6-4.JPG"  alt="Part 2: Nope Setup" width="50%">
+        <p><em>Figure 4: PID Control, Time vs Distance at various Kp values</em></p>
+        <br>
+
+        <p>
+            What can be deduced from the below graph, is that a higher value for Kp does not necessarily result in the robot reaching its 
+            destination faster. In this case, the Kp of 0.07 overshoots the desired location significantly, and correct be undershooting, and 
+            eventually reaches the 300mm destination. On the other hand, the 0.03 and 0.04 factors do not overshoot nearly as much, leading to less back
+            and forth motion before reaching the end-position.
+        </p>
+
+        <h5>Time vs. PWM</h5>
+        <p>
+            Data for PWM control values were also saved and plotted, resulting into similar insights:
+          </p>
+
+          <br>
+          <img src="../images/lab6-5.JPG"  alt="Part 2: Nope Setup" width="50%">
+          <p><em>Figure 5: PID Control, Time vs PWM at various Kp values</em></p>
+          <br>
+
+          <p>
+            Similarly, the PWM control values are far higher for a Kp of 0.07, resulting in a lot of overshooting and undershooting as the robot
+            speeds up to fast and significantly misses its target, needing to correct. Kps of 0.03 and 0.04 on the other hand experience a smoother 
+            process towards the end-destination. 
+        </p>
+    
+        
+        <br>
+        <hr>
+      <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><i>- - - - - This concludes Lab 6  - - - - -</i></p>
+          </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>

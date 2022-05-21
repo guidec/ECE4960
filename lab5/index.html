@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Lab 5</title>
+  <link rel="shortcut icon" href="images/icons8-internet-explorer-50.png"
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body style="background-color:lightgrey;text-align: center;" >
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading" style="color: blue;">ECE 4960 - Guillaume de Cannart</div>
+      <div class="list-group list-group-flush">
+        <a href="../index.html" class="list-group-item list-group-item-action bg-light">Home</a>
+        <a href="../lab1/index.html" class="list-group-item list-group-item-action bg-light">Lab 1</a>
+         <a href="../lab2/index.html" class="list-group-item list-group-item-action bg-light">Lab 2</a>
+        <a href="../lab3/index.html" class="list-group-item list-group-item-action bg-light">Lab 3</a>
+        <a href="../lab4/index.html" class="list-group-item list-group-item-action bg-light">Lab 4</a> 
+        <a href="../lab5/index.html" class="list-group-item list-group-item-action bg-light">Lab 5</a> 
+        <a href="../lab10/index.html" class="list-group-item list-group-item-action bg-light">Lab 10</a> 
+        <a href="../lab11/index.html" class="list-group-item list-group-item-action bg-light">Lab 11</a>
+        <a href="../lab12/index.html" class="list-group-item list-group-item-action bg-light">Lab 12</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://cei-lab.github.io/ECE4960-2022/">Cornell ECE4960 Website</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid" id="margins">
+        <h1 class="mt-4">ECE 4960: LAB 5 - Open Loop Control</h1>
+        <h3>Description</h3>
+        <p>
+            This lab was the first lab using code to control the robot instead of the manual remote control. The goal here was to create basic functions to calibrate and drive the motors forward.
+            The result of this lab was the ability to execute a series of open loop pre-programmed moves with the robot.
+             
+
+
+        </p>
+        <br>
+        <br>
+        <hr>
+        <h4>1. Motor Driver PWM signals</h4>
+        <p>
+          The first step was to wire up one motor driver to the Artemis, and power it from an external power supply to read the 
+          PWM signals with an oscilloscope. Below is the oscilloscope output of a motor driver being ran at a PWM value of 80. As can be seen From
+          the oscilloscope plot, there is a clear duty cycle regulating the output power from the motor driver:
+        </p>
+        <br>
+        <img src="../images/lab5-1.JPG"  alt="Part 1: Simulator Setup" width="70%">
+        <p><em>Figure 1: Motor Driver Oscilloscope Output </em></p>
+        <br>
+        <br>
+        <hr>
+
+        <h4>2. Spinning One Motor with the Motor Driver</h4>
+        <p>
+            Next, we were supposed to hook up a first motor to the motor driver, and use a power supply to rotate one set of wheels. 
+            Given time constraints, I proceeded to wire up the robot with the battery directly, and soldered the motors to the motor driver.
+            Below is an example of one set of wheels rotating at a duty cycle of 70, indicating that the motor driver indeed is wired up well.
+        </p>
+        
+        <br>
+        <p><i>Rotating one Motor with the Artemis</i></p>
+          <video width="580" height="480" controls>
+            <source src="../images/lab5-1.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+          </video>  
+        <br>
+        <br>
+        <hr>
+        <h4>3. Wiring up and Spinning both motors</h4>
+        <p>With one motor driver now functioning, i proceeded to wire up the second motor driver and attach everything in place in 
+          the chassis. A significant amount of time was spent soldering this step, since it involved connecting multiple terminals together
+          which I found quite difficult to get right. Eventually, all motor drivers were soldered and glued to the car chassis:
+        
+        </p>
+        <br>
+        <img src="../images/lab5-2.JPG"  alt="Part 2: Nope Setup" width="50%">
+        <p><em>Figure 2: Wiring for one Motor Driver</em></p>
+        <br>
+        
+        <br>
+        <img src="../images/lab5-3.JPG"  alt="Part 2: Nope Setup" width="50%">
+        <p><em>Figure 3: Wiring for both motor drivers</em></p>
+        <br>
+
+        <p>
+          This resulted in full functionality in both directions for both motor drivers. Actuation of both of these is shown in the video below,
+          where likewise the motors are being spun at a PWM duty cycle of 70, and are being rotated backwards and forwards.
+        </p>
+
+        <br>
+        <p><i>Rotating both motors</i></p>
+          <video width="580" height="480" controls>
+            <source src="../images/lab5-2.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+          </video>  
+        <br>
+        <br>
+        <hr>
+
+        <h4>4. Running the car on the ground & Calibration</h4>
+        <p>
+          Next came the step of running the car on the ground. Here, I quickly realized that the motors were not calibrated, as mentioned in the lab handout.
+          After some testing, I found that in order for the car to drive straight, one motor had to be ~2.1 times faster
+          than the other motor. This resulted in the following driver code:
+
+        </p>
+
+        <br>
+        <img src="../images/lab5-4.JPG"  alt="Part 2: Nope Setup" width="50%">
+        <p><em>Figure 3: Motor Driver Calibration</em></p>
+        <br>
+
+        <p>
+          With the motors now being calibrated, I was able to experiment whether the calibration performed as expected by having the robot drive in a straight line on the ground.
+          The motor calibration shown above seemed to work, and at a relatively rapid speed (analogWrite parameter set to 70), the robot was able to execute
+          a mostly straight path.
+        </p>
+
+        <br>
+        <p><i>Calibrated Straight Path</i></p>
+          <video width="580" height="480" controls>
+            <source src="../images/lab5-3.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+          </video>  
+        <br>
+        <br>
+        <hr>
+        <h4>5. Motor Lower Limit</h4>
+        <p>
+          A next step was to determine the lower PMW limit at which motors can rotate while still overcoming the force of friction. 
+          After several experiments, this lower limit turned out to be  <b>25</b>. Below this value, the motors no longer turn if the robot
+          is placed on the ground. This will be important for future labs where the robot will have to determine its duty cycle on its own,
+          but still move when the duty cycle is set to a value below this lower limit.
+
+        </p>
+
+        
+
+        <br>
+        <p><i>Lower Limit Demonstration</i></p>
+          <video width="580" height="480" controls>
+            <source src="../images/lab5-4.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+          </video>  
+        <br>
+        <br>
+        <hr>
+        <h4>6. Open Loop Control</h4>
+        <p>
+          Finally, with the motors now calibrated, set up, and lower limit determined, it was time to demonstrate a series of random open loop motions.
+          I made the robot rotate, drive, rotate again, etc. to show that all functionalities are working. This is shown in a final video below:
+
+        </p>
+          
+        <br>
+        <p><i>Open Loop Control</i></p>
+          <video width="580" height="480" controls>
+            <source src="../images/lab5-5.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+          </video>  
+        <br>
+
+
+
+
+        
+        <br>
+        <hr>
+      <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><i>- - - - - This concludes Lab 5  - - - - -</i></p>
+          </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>
