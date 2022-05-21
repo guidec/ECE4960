@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Lab 13</title>
+  <link rel="shortcut icon" href="images/icons8-internet-explorer-50.png"
+
+  <!-- Bootstrap core CSS -->
+  <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="../css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body style="background-color:lightgrey;text-align: center;" >
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading" style="color: blue;">ECE 4960 - Guillaume de Cannart</div>
+      <div class="list-group list-group-flush">
+        <a href="../index.html" class="list-group-item list-group-item-action bg-light">Home</a>
+        <a href="../lab1/index.html" class="list-group-item list-group-item-action bg-light">Lab 1</a>
+        <a href="../lab2/index.html" class="list-group-item list-group-item-action bg-light">Lab 2</a>
+        <a href="../lab3/index.html" class="list-group-item list-group-item-action bg-light">Lab 3</a>
+        <a href="../lab4/index.html" class="list-group-item list-group-item-action bg-light">Lab 4</a>
+        <a href="../lab5/index.html" class="list-group-item list-group-item-action bg-light">Lab 5</a>
+        <a href="../lab6/index.html" class="list-group-item list-group-item-action bg-light">Lab 6</a>
+        <a href="../lab7/index.html" class="list-group-item list-group-item-action bg-light">Lab 7</a> 
+        <a href="../lab9/index.html" class="list-group-item list-group-item-action bg-light">Lab 9</a>  
+        <a href="../lab10/index.html" class="list-group-item list-group-item-action bg-light">Lab 10</a>  
+        <a href="../lab11/index.html" class="list-group-item list-group-item-action bg-light">Lab 11</a> 
+        <a href="../lab12/index.html" class="list-group-item list-group-item-action bg-light">Lab 12</a>
+        <a href="../lab13/index.html" class="list-group-item list-group-item-action bg-light">Lab 13</a> 
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="../index.html">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="https://cei-lab.github.io/ECE4960-2022/">Cornell ECE4960 Website</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid" id="margins">
+        <h1 class="mt-4">ECE 4960: LAB 13 - Grid Localization (Real)</h1>
+        <hr>
+        <h3>Description</h3>
+        <p>
+            This final lab consisted of using PID control and localization to allow the robot to navigate along a fixed waypoint path
+            in the lab map environment. I worked with a lab partner, Devlin, for this lab, and we decided on an approach relying
+            heavily on PID control to accurately reach each waypoint. To avoid having the robot lose its orientation, we decided against
+            executing localization at every waypoint, and instead only localize at the very last waypoint once the trajectory is completed. 
+
+        </p>
+            
+            
+            <br>
+            <hr>
+        <h4>1. Linear Motion to Waypoints</h4>
+        <p>
+            As mentioned above, PID control relying on distances to the walls surrounding the robot was used to have the robot move with accuracy through the series of waypoints. 
+            This is done by getting an initial TOF sensor reading, to which the total distance required to be traveled is added, i.e. the linear euclidean distance
+            between two points, <code>sqrt((x2-x1)^2+(y2-y1)^2)</code>.
+        </p>
+        <br>
+
+        <br>
+
+        <img src="../images/lab13-1.JPG"  alt="Part 1: Simulator Setup" width="70%">
+        <p><em>Figure 1: Calculating distance between two points for use with TOF & PID</em></p>
+        <br>
+
+        <p>
+            Summarized, if the robot is driving backwards, it adds the euclidean distance to the TOF reading and moves until that position is reached with PID.
+            If the robot is driving forwards, it substracts the euclidean distance from the TOF reading, and moves fowards until that TOF reading is reached via PID. 
+
+        </p>
+        <br>
+        <hr>
+        <h4>2. Rotations</h4>
+        <p>
+            Rotating the robot is also done via PID & via gyroscope measurements. All rotations are pre-calculated via the formula for 
+            the angle between two lines, <code>atan((slope_p2-slope_p1)/(1+slope_p1*slope_p2)))*180/3.14159</code>, and at every waypoint the 
+            robot then turns in the desired direction until that gyroscope reading is reached. This is illustrated below:
+
+        </p>
+        <br>
+        <p><i>Rotating to a calculated angle via PID</i></p>
+                <video width="580" height="480" controls>
+                  <source src="../images/lab13-1.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video>  
+        <br>
+
+
+        <br>
+        <hr>
+        <h4>3. Navigating Series of Waypoints</h4>
+
+        
+        <p>
+            Lastly, these two motions were combined into a control file, which steps through each waypoint and their respective linear motions. 
+            This results in a trajectory closely matching the trajectory shown below:
+
+
+        </p>
+        
+<br>
+
+        <img src="../images/lab13-2.JPG"  alt="Part 1: Simulator Setup" width="70%">
+        <p><em>Figure 2: Desired Robot Trajectory </em></p>
+        <br>
+
+        <p>
+            The robot was succesfully able to complete this trajectory, and navigated to the following waypoints:
+            <br><code>(-4, -3)</code><br>
+            <code>(-2, -1)</code><br>
+            <code>(1, -1)</code><br>
+            <code>(2, -3)</code><br>
+            <code>(5, -3)</code><br>
+            <code>(5, -2)</code><br>
+            <code>(5, 3)</code><br>
+            <code>(0, 3)</code><br>
+            <code>(0, 0)</code><br>
+        </p>
+        <br>
+        <hr>
+        <h4>4. Results</h4>
+        <p>The resulting run from in the lab environment is shown below:</p>
+        
+        <br>
+        <p><i>Final Demo Video - Waypoint Navigation</i></p>
+                <video width="580" height="480" controls>
+                  <source src="../images/lab13-2.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video>  
+        <br>
+
+        <br>
+        <hr>
+        <h4>5. Final localization</h4>
+        <p>A localization rotation is done at the very end of the trajectory to ensure that the robot indeed did reach its destination. 
+            The output (this is the same algorithm as was developed for lab 12) is shown below. It is not perfectly accurate and indicates its position as lower in the y-direction than 
+        anticipated, but is relatively correct.
+    </p>
+        <br>
+
+        <img src="../images/lab13-3.jpeg"  alt="Part 1: Simulator Setup" width="70%">
+        <p><em>Figure 3: Final localization of the robot</em></p>
+        <br>
+        <br>
+        <hr>
+      <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <p><i>- - - - - This concludes Lab 12 - - - - -</i></p>
+          </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="../vendor/jquery/jquery.min.js"></script>
+  <script src="../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>

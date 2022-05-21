@@ -29,11 +29,17 @@
       <div class="list-group list-group-flush">
         <a href="../index.html" class="list-group-item list-group-item-action bg-light">Home</a>
         <a href="../lab1/index.html" class="list-group-item list-group-item-action bg-light">Lab 1</a>
-         <a href="../lab2/index.html" class="list-group-item list-group-item-action bg-light">Lab 2</a>
+        <a href="../lab2/index.html" class="list-group-item list-group-item-action bg-light">Lab 2</a>
         <a href="../lab3/index.html" class="list-group-item list-group-item-action bg-light">Lab 3</a>
-        <a href="../lab4/index.html" class="list-group-item list-group-item-action bg-light">Lab 4</a> 
-        <a href="../lab10/index.html" class="list-group-item list-group-item-action bg-light">Lab 10</a> 
-        <a href="../lab10/index.html" class="list-group-item list-group-item-action bg-light">Lab 11</a> 
+        <a href="../lab4/index.html" class="list-group-item list-group-item-action bg-light">Lab 4</a>
+        <a href="../lab5/index.html" class="list-group-item list-group-item-action bg-light">Lab 5</a>
+        <a href="../lab6/index.html" class="list-group-item list-group-item-action bg-light">Lab 6</a>
+        <a href="../lab7/index.html" class="list-group-item list-group-item-action bg-light">Lab 7</a> 
+        <a href="../lab9/index.html" class="list-group-item list-group-item-action bg-light">Lab 9</a>  
+        <a href="../lab10/index.html" class="list-group-item list-group-item-action bg-light">Lab 10</a>  
+        <a href="../lab11/index.html" class="list-group-item list-group-item-action bg-light">Lab 11</a> 
+        <a href="../lab12/index.html" class="list-group-item list-group-item-action bg-light">Lab 12</a>
+        <a href="../lab13/index.html" class="list-group-item list-group-item-action bg-light">Lab 13</a> 
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -73,6 +79,7 @@
 
       <div class="container-fluid" id="margins">
         <h1 class="mt-4">ECE 4960: LAB 11 - Grid Localization (Simulator)</h1>
+        <hr>
         <h3>Description</h3>
         <p>The aim of this lab was to complete grid localization within the box2d simulator environment. In this case, a given trajectory was predefined within the simulator, and the goal was to best represent that ground truth trajectory with Bayes Filter localization. 
             For this lab, we were given an initial jupyter notebook with classes an helper functions, as outlined below.
@@ -105,9 +112,9 @@
             that we are making in this lab is supposed to approximate.
         </p>
 <br><br><hr>
-        <h4>Tasks</h4>
+        <h4>1. Tasks</h4>
         <br>
-        <h5>1. Prediction Step</h5>
+        <h5>a. Prediction Step</h5>
         <p>The first step in creating the Bayes Filter was to develop the algorithm for the prediction step of the Bayes Filter. This 
             step is shown below, and takes as inputs the current and previous odometry information to use the robot movement information in computing the pose belief.
             The mathematical description of this step returning bel_bar is shown below:
@@ -138,7 +145,7 @@
         <p><em>Figure 3:Motion Model</em></p>
         <br>
         <br>
-        <h5>2. Update Step</h5>
+        <h5>b. Update Step</h5>
         <br>
         <h6>Sensor Model</h6>
             <p>The second step of Bayes Filter Localization is the update step. This step passes as input the true observations of the robot in a given pose on the map, and calculates the probability of each sensor measurement in that pose, outputting them for use in the update step. 
@@ -159,7 +166,7 @@
         <br>
         <hr>
         <br>
-            <h4>Results</h4>
+            <h4>3. Results</h4>
         <p>The above algorithm was ran in the simulator, trailing the trajectory defined by the <code>Trajectory</code> class.
         The pose belief is calculated after every robot motion by rotating 360 degrees around its axis, collecting range information to compute the sensor model. 
         In the below video, pose belief is represented in blue, ground truth in green, and odometry information in red.
